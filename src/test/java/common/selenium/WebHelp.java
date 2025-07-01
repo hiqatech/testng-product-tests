@@ -10,6 +10,7 @@ import org.openqa.selenium.remote.CapabilityType;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.apache.commons.io.FileUtils;
+import org.testng.Reporter;
 
 import java.io.File;
 import java.net.URL;
@@ -97,7 +98,7 @@ public class WebHelp {
             }
 
             webDriver.manage().timeouts().pageLoadTimeout(Duration.ofSeconds(9));
-            webDriver.manage().timeouts().implicitlyWait(Duration.ofSeconds(2));
+            webDriver.manage().timeouts().implicitlyWait(Duration.ofSeconds(7));
             webDriver.manage().window().maximize();
 
             return webDriver;
@@ -131,8 +132,11 @@ public class WebHelp {
         try {
             TakesScreenshot scrShot =((TakesScreenshot)webdriver);
             File SrcFile=scrShot.getScreenshotAs(OutputType.FILE);
-            File DestFile=new File(System.getProperty("reportPath") + getTimeStamp() + ".png");
+            File DestFile=new File(System.getProperty("reportPath")+ "\\screenshots\\" + getTimeStamp() + ".png");
             FileUtils.copyFile(SrcFile, DestFile);
+            String filePath = DestFile.toString();
+            String path = "<img src=\"file://\"" + filePath + "\" alt=\"\"/>";
+            Reporter.log(path);
             sleep(1000);
         } catch (Exception ex) {
             System.out.println(ex);

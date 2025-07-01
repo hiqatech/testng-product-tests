@@ -22,7 +22,7 @@ public class Hooks {
         System.setProperty("userID",System.getProperty("user.home").replace("C:\\Users\\",""));
         System.setProperty("downloadPath",System.getProperty("user.home")+"\\Downloads\\");
         System.setProperty("uploadPath",System.getProperty("user.home")+"\\Desktop\\");
-        System.setProperty("reportPath",System.getProperty("projectPath")+"\\target\\reports\\");
+        System.setProperty("reportPath",System.getProperty("projectPath")+"\\target\\surefire-reports\\");
         System.setProperty("filePath",System.getProperty("projectPath") + "\\src\\test\\resources\\files\\");
         System.setProperty("driverPath",System.getProperty("projectPath") + "\\src\\test\\resources\\webdrivers\\");
 
