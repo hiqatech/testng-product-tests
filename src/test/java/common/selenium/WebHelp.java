@@ -15,6 +15,7 @@ import java.io.File;
 import java.net.URL;
 import java.time.Duration;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 
 public class WebHelp {
@@ -130,12 +131,16 @@ public class WebHelp {
         try {
             TakesScreenshot scrShot =((TakesScreenshot)webdriver);
             File SrcFile=scrShot.getScreenshotAs(OutputType.FILE);
-            File DestFile=new File(System.getProperty("reportPath"));
-            FileUtils.copyFile(SrcFile, new File( LocalDateTime.now().toString()+".jpg"));
+            File DestFile=new File(System.getProperty("reportPath") + getTimeStamp() + ".png");
+            FileUtils.copyFile(SrcFile, DestFile);
             sleep(1000);
         } catch (Exception ex) {
             System.out.println(ex);
         }
+    }
+
+    public static String getTimeStamp(){
+        return LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMddHHmmss"));
     }
 
 }
