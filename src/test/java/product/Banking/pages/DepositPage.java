@@ -40,6 +40,7 @@ public class DepositPage {
 
     public void goToTransactions() {
         driver.findElement(transactions_button).click();
+        WebHelp.sleep(500);
     }
 
     public void logout() {

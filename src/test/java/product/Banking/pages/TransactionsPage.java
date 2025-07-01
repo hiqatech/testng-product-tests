@@ -35,5 +35,6 @@ public class TransactionsPage {
 
     public void goToBack() {
         driver.findElement(back_button).click();
+        WebHelp.sleep(500);
     }
 }
