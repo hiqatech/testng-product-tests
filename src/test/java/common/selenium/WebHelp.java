@@ -9,8 +9,12 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.remote.CapabilityType;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
+import org.apache.commons.io.FileUtils;
+
+import java.io.File;
 import java.net.URL;
 import java.time.Duration;
+import java.time.LocalDateTime;
 import java.util.HashMap;
 
 public class WebHelp {
@@ -91,7 +95,7 @@ public class WebHelp {
 
             }
 
-            webDriver.manage().timeouts().pageLoadTimeout(Duration.ofSeconds(7));
+            webDriver.manage().timeouts().pageLoadTimeout(Duration.ofSeconds(9));
             webDriver.manage().timeouts().implicitlyWait(Duration.ofSeconds(2));
             webDriver.manage().window().maximize();
 
@@ -108,6 +112,27 @@ public class WebHelp {
         try {
             webDriver.close();
             webDriver.quit();
+        } catch (Exception ex) {
+            System.out.println(ex);
+        }
+    }
+
+    public static void sleep(int sleep) {
+        try {
+            webDriver.wait(sleep);
+        } catch (Exception ex) {
+            System.out.println(ex);
+        }
+    }
+
+    public static void takeScreenShot(WebDriver webdriver){
+        sleep(1000);
+        try {
+            TakesScreenshot scrShot =((TakesScreenshot)webdriver);
+            File SrcFile=scrShot.getScreenshotAs(OutputType.FILE);
+            File DestFile=new File(System.getProperty("reportPath"));
+            FileUtils.copyFile(SrcFile, new File( LocalDateTime.now().toString()+".jpg"));
+            sleep(1000);
         } catch (Exception ex) {
             System.out.println(ex);
         }

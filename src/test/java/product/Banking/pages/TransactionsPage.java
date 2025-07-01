@@ -1,7 +1,9 @@
 package product.Banking.pages;
 
+import common.selenium.WebHelp;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.testng.Assert;
 
 public class TransactionsPage {
     protected WebDriver driver;
@@ -20,13 +22,18 @@ public class TransactionsPage {
 
     public TransactionsPage(WebDriver driver){
         this.driver = driver;
-        if (!driver.getTitle().equals("Transactions Page")) {
-            throw new IllegalStateException("This is not Transactions Page," +
-                    " current page is: " + driver.getCurrentUrl());
-        }
     }
 
-    public TransactionsPage verifyTransaction(String userName) {
-        return new TransactionsPage(driver);
+    public void verifyTransaction(String amount) {
+        Assert.assertEquals(driver.findElement(transaction1_amount).getText().toString(),amount);
+        WebHelp.takeScreenShot(driver);
+    }
+
+    public void selectReset() {
+        driver.findElement(reset_button).click();
+    }
+
+    public void goToBack() {
+        driver.findElement(back_button).click();
     }
 }
