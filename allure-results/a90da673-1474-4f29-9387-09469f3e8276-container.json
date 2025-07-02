@@ -1,1 +1,0 @@
-{"uuid":"a90da673-1474-4f29-9387-09469f3e8276","name":"java-selenium-testng","children":["61eb7701-b4bc-4eda-833c-b0b7c9d9fb76"],"befores":[{"name":"setUp","status":"passed","stage":"finished","description":"","steps":[],"attachments":[],"parameters":[],"start":1751350935056,"stop":1751350935120}],"afters":[],"start":1751350935041,"stop":1751350935273}

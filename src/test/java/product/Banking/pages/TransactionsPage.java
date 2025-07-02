@@ -25,8 +25,8 @@ public class TransactionsPage {
     }
 
     public void verifyTransaction(String amount) {
-        Assert.assertEquals(driver.findElement(transaction1_amount).getText().toString(),amount);
-        WebHelp.takeScreenShot(driver);
+        Assert.assertEquals(driver.findElement(transaction1_amount).getText(),amount);
+        WebHelp.takeScreenShot(driver,"transaction");
     }
 
     public void selectReset() {

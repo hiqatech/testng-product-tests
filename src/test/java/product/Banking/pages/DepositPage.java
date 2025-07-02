@@ -30,12 +30,13 @@ public class DepositPage {
         driver.findElement(deposit).click();
         Assert.assertTrue(driver.findElement(deposit_successful).isDisplayed());
         Assert.assertTrue(driver.findElement(balance).getText().toString().equals(amount));
-        WebHelp.takeScreenShot(driver);
+        WebHelp.takeScreenShot(driver, "deposit");
+        WebHelp.sleep(2000);
     }
 
     public void verifyBalance(String amount){
         Assert.assertTrue(driver.findElement(balance).getText().toString().equals(amount));
-        WebHelp.takeScreenShot(driver);
+        WebHelp.takeScreenShot(driver, "balance");
     }
 
     public void goToTransactions() {

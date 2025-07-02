@@ -127,12 +127,12 @@ public class WebHelp {
         }
     }
 
-    public static void takeScreenShot(WebDriver webdriver){
+    public static void takeScreenShot(WebDriver webdriver,String name){
         sleep(1000);
         try {
             TakesScreenshot scrShot =((TakesScreenshot)webdriver);
             File SrcFile=scrShot.getScreenshotAs(OutputType.FILE);
-            File DestFile=new File(System.getProperty("reportPath")+ "\\screenshots\\" + getTimeStamp() + ".png");
+            File DestFile=new File(System.getProperty("filePath")+ "\\screenshots\\" + name + ".png");
             FileUtils.copyFile(SrcFile, DestFile);
             String filePath = DestFile.toString();
             String path = "<img src=\"file://\"" + filePath + "\" alt=\"\"/>";
