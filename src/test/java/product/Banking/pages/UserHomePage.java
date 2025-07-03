@@ -1,6 +1,7 @@
 package product.Banking.pages;
 
-import common.selenium.WebHelp;
+import static common.selenium.WebHelp.clickElement;
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 
@@ -23,6 +24,6 @@ public class UserHomePage {
     }
 
     public void goToDeposit() {
-        WebHelp.clickElement(deposit_button);
+        clickElement(deposit_button);
     }
 }

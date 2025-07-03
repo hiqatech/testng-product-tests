@@ -5,6 +5,8 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.testng.Assert;
 
+import static common.selenium.WebHelp.*;
+
 public class DepositPage {
     protected WebDriver driver;
 
@@ -26,23 +28,23 @@ public class DepositPage {
     }
 
     public void makeDeposit(String amount){
-        WebHelp.typeElement(amount_field,amount);
-        WebHelp.clickElement(deposit);
-        WebHelp.assertElementDisplayed(deposit_successful);
-        WebHelp.assertElementText(balance,"100");
-        WebHelp.sleep(2000);
+        typeElement(amount_field,amount);
+        clickElement(deposit);
+        assertElementDisplayed(deposit_successful);
+        assertElementText(balance,"100");
+        sleep(2000);
     }
 
     public void verifyBalance(String amount){
-        WebHelp.assertElementText(balance,amount);
+        assertElementText(balance,amount);
     }
 
     public void goToTransactions() {
-        WebHelp.clickElement(transactions_button);
+        clickElement(transactions_button);
     }
 
     public void logout() {
-        WebHelp.clickElement(logout_button);
+        clickElement(logout_button);
     }
 }
 

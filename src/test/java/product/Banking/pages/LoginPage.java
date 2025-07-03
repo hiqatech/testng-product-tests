@@ -4,6 +4,8 @@ import common.selenium.WebHelp;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 
+import static common.selenium.WebHelp.*;
+
 public class LoginPage {
     protected WebDriver driver;
 
@@ -18,9 +20,9 @@ public class LoginPage {
     }
 
     public void loginWithUser(String userName) {
-        WebHelp.navigateToUrl(System.getProperty("baseURL"));
-        WebHelp.clickElement(customer_login);
-        WebHelp.selectElementByText(user_select,userName);
-        WebHelp.clickElement(login_button);
+        navigateToUrl(System.getProperty("baseURL"));
+        clickElement(customer_login);
+        selectElementByText(user_select,userName);
+        clickElement(login_button);
     }
 }

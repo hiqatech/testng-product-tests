@@ -4,6 +4,9 @@ import common.selenium.WebHelp;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 
+import static common.selenium.WebHelp.assertElementText;
+import static common.selenium.WebHelp.clickElement;
+
 public class TransactionsPage {
     protected WebDriver driver;
 
@@ -24,14 +27,14 @@ public class TransactionsPage {
     }
 
     public void verifyTransaction(String amount) {
-        WebHelp.assertElementText(transaction1_amount,amount);
+        assertElementText(transaction1_amount,amount);
     }
 
     public void selectReset() {
-        WebHelp.clickElement(reset_button);
+        clickElement(reset_button);
     }
 
     public void goToBack() {
-        WebHelp.clickElement(back_button);
+        clickElement(back_button);
     }
 }
