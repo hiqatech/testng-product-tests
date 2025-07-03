@@ -1,8 +1,8 @@
 package product.Banking.pages;
 
+import common.selenium.WebHelp;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.support.ui.Select;
 
 public class LoginPage {
     protected WebDriver driver;
@@ -18,10 +18,9 @@ public class LoginPage {
     }
 
     public void loginWithUser(String userName) {
-        driver.get(System.getProperty("baseURL"));
-        driver.findElement(customer_login).click();
-        Select select = new Select(driver.findElement(user_select));
-        select.selectByVisibleText(userName);
-        driver.findElement(login_button).click();
+        WebHelp.navigateToUrl(System.getProperty("baseURL"));
+        WebHelp.clickElement(customer_login);
+        WebHelp.selectElementByText(user_select,userName);
+        WebHelp.clickElement(login_button);
     }
 }

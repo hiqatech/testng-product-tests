@@ -1,6 +1,5 @@
 package product.Banking.Tests;
 
-import com.aventstack.extentreports.ExtentTest;
 import com.aventstack.extentreports.MediaEntityBuilder;
 import com.aventstack.extentreports.Status;
 import common.selenium.WebHelp;
@@ -14,6 +13,9 @@ import product.Banking.pages.UserHomePage;
 
 import java.io.IOException;
 
+import static common.setup.Hooks.html;
+import static common.setup.Hooks.test;
+
 /***
  * Tests Deposit feature
  */
@@ -24,34 +26,32 @@ public class TestDeposit {
 
     @BeforeTest
     public void setUp(){
-        Hooks.setup("BankingWeb","LocalQAChrome");
+        Hooks.setup("BankingWebDeposit","LocalQAChrome");
         driver = WebHelp.startMyWebDriver();
     }
 
     @Test
     public void testDeposit() throws IOException {
-        ExtentTest test = Hooks.extent.createTest("testDeposit", "description");
-        test.log(Status.INFO, "This step shows usage of log(status, details)");
-        test.info("This step shows usage of info(details)");
 
         LoginPage loginPage = new LoginPage(driver);
         loginPage.loginWithUser("Ron Weasly");
+        test.pass("Logged in with Ron Weasly user");
         UserHomePage userHomePage = new UserHomePage(driver);
         userHomePage.goToDeposit();
         DepositPage depositPage = new DepositPage(driver);
         depositPage.makeDeposit("100");
+        test.pass("Made 100 Deposit");
         depositPage.goToTransactions();
         TransactionsPage transactionsPage = new TransactionsPage(driver);
         transactionsPage.verifyTransaction("100");
+        test.pass("Transaction 100 Confirmed");
         transactionsPage.selectReset();
+        test.pass("Transactions Reset");
         transactionsPage.goToBack();
         depositPage = new DepositPage(driver);
         depositPage.verifyBalance("0");
         depositPage.logout();
-
-        String screenshotPath = System.getProperty("filePath")+ "\\screenshots\\transaction.png";
-        test.pass("ScreenShot", MediaEntityBuilder.createScreenCaptureFromPath(screenshotPath).build());
-        test.addScreenCaptureFromPath(screenshotPath);
+        test.pass("Logged Out");
 
     }
 

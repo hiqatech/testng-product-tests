@@ -26,26 +26,23 @@ public class DepositPage {
     }
 
     public void makeDeposit(String amount){
-        driver.findElement(amount_field).sendKeys(amount);
-        driver.findElement(deposit).click();
-        Assert.assertTrue(driver.findElement(deposit_successful).isDisplayed());
-        Assert.assertTrue(driver.findElement(balance).getText().toString().equals(amount));
-        WebHelp.takeScreenShot(driver, "deposit");
+        WebHelp.typeElement(amount_field,amount);
+        WebHelp.clickElement(deposit);
+        WebHelp.assertElementDisplayed(deposit_successful);
+        WebHelp.assertElementText(balance,"100");
         WebHelp.sleep(2000);
     }
 
     public void verifyBalance(String amount){
-        Assert.assertTrue(driver.findElement(balance).getText().toString().equals(amount));
-        WebHelp.takeScreenShot(driver, "balance");
+        WebHelp.assertElementText(balance,amount);
     }
 
     public void goToTransactions() {
-        driver.findElement(transactions_button).click();
-        WebHelp.sleep(1500);
+        WebHelp.clickElement(transactions_button);
     }
 
     public void logout() {
-        driver.findElement(logout_button).click();
+        WebHelp.clickElement(logout_button);
     }
 }
 

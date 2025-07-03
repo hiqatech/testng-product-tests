@@ -3,7 +3,6 @@ package product.Banking.pages;
 import common.selenium.WebHelp;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.testng.Assert;
 
 public class TransactionsPage {
     protected WebDriver driver;
@@ -25,16 +24,14 @@ public class TransactionsPage {
     }
 
     public void verifyTransaction(String amount) {
-        Assert.assertEquals(driver.findElement(transaction1_amount).getText(),amount);
-        WebHelp.takeScreenShot(driver,"transaction");
+        WebHelp.assertElementText(transaction1_amount,amount);
     }
 
     public void selectReset() {
-        driver.findElement(reset_button).click();
+        WebHelp.clickElement(reset_button);
     }
 
     public void goToBack() {
-        driver.findElement(back_button).click();
-        WebHelp.sleep(1000);
+        WebHelp.clickElement(back_button);
     }
 }
