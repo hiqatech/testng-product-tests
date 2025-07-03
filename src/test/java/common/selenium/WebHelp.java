@@ -23,8 +23,6 @@ import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
-
-import static common.setup.Hooks.setup;
 import static common.setup.Hooks.test;
 
 public class WebHelp {
@@ -135,7 +133,7 @@ public class WebHelp {
         }
     }
 
-    public static void takeScreenShot(WebDriver webdriver){
+    public static void takeScreenShot(WebDriver webdriver, String screen){
         sleep(1000);
         try {
             TakesScreenshot scrShot =((TakesScreenshot)webdriver);
@@ -147,7 +145,7 @@ public class WebHelp {
             Reporter.log(path);
             sleep(1000);
 
-            test.pass("ScreenShot", MediaEntityBuilder.createScreenCaptureFromPath(filePath).build());
+            test.pass(screen, MediaEntityBuilder.createScreenCaptureFromPath(filePath).build());
             test.addScreenCaptureFromPath(filePath);
 
         } catch (Exception ex) {
@@ -177,12 +175,12 @@ public class WebHelp {
 
     public static void assertElementDisplayed(By elementBy){
         Assert.assertTrue(webDriver.findElement(elementBy).isDisplayed());
-        takeScreenShot(webDriver);
+        takeScreenShot(webDriver, elementBy.toString());
     }
 
     public static void assertElementText(By elementBy, String text){
-        Assert.assertTrue(webDriver.findElement(elementBy).getText().equals(text));
-        takeScreenShot(webDriver);
+        Assert.assertEquals(webDriver.findElement(elementBy).getText(),text);
+        takeScreenShot(webDriver, elementBy.toString());
     }
 
     public static void selectElementByText(By elementBy, String text){
