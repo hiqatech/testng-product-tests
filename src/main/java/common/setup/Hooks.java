@@ -19,7 +19,7 @@ public class Hooks {
 
     public static void setup(String product,String environment)
     {
-        html = new ExtentHtmlReporter("extentReport.html");
+        html = new ExtentHtmlReporter("reports//extent.html");
         extent = new ExtentReports();
         extent.attachReporter(html);
         test = extent.createTest(product,environment);
@@ -37,6 +37,7 @@ public class Hooks {
         System.setProperty("downloadPath",System.getProperty("user.home")+"\\Downloads\\");
         System.setProperty("uploadPath",System.getProperty("user.home")+"\\Desktop\\");
         System.setProperty("reportPath",System.getProperty("projectPath")+"\\target\\surefire-reports\\");
+        System.setProperty("extentPath",System.getProperty("projectPath")+"\\reports\\");
         System.setProperty("filePath",System.getProperty("projectPath") + "\\src\\test\\resources\\files\\");
         System.setProperty("driverPath",System.getProperty("projectPath") + "\\src\\main\\resources\\webdrivers\\");
 
@@ -46,15 +47,17 @@ public class Hooks {
         print("Product Tests Starts");
         print("Test : : " + System.getProperty("product"));
         print("ProjectPath : " + System.getProperty("projectPath"));
-        print("FilePath : " + System.getProperty("filePath"));
+        print("ExtentPath : " + System.getProperty("extentPath"));
         print("Product : " + System.getProperty("product"));
         print("Environment : " + System.getProperty("environment"));
         print("BaseURL : " + System.getProperty("baseURL"));
         print("************************************************************************************");
 
+        if (System.getProperty("product").contains("Web")){
         try { File screenshots = new File(System.getProperty("filePath") + "\\screenshots\\");
             FileUtils.cleanDirectory(screenshots);}
         catch (Exception ex){}
+        }
 
     }
 
