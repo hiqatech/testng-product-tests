@@ -19,7 +19,7 @@ public class Hooks {
 
     public static void setup(String product,String environment)
     {
-        html = new ExtentHtmlReporter("reports//extent.html");
+        html = new ExtentHtmlReporter("test-output//extent.html");
         extent = new ExtentReports();
         extent.attachReporter(html);
         test = extent.createTest(product,environment);
@@ -37,8 +37,9 @@ public class Hooks {
         System.setProperty("downloadPath",System.getProperty("user.home")+"\\Downloads\\");
         System.setProperty("uploadPath",System.getProperty("user.home")+"\\Desktop\\");
         System.setProperty("reportPath",System.getProperty("projectPath")+"\\target\\surefire-reports\\");
-        System.setProperty("extentPath",System.getProperty("projectPath")+"\\reports\\");
+        System.setProperty("extentPath",System.getProperty("projectPath")+"\\test-output\\");
         System.setProperty("filePath",System.getProperty("projectPath") + "\\src\\test\\resources\\files\\");
+        System.setProperty("screenshotPath",System.getProperty("projectPath") + "\\test-output\\screenshots\\");
         System.setProperty("driverPath",System.getProperty("projectPath") + "\\src\\main\\resources\\webdrivers\\");
 
         print("************************************************************************************");
