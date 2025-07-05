@@ -2,7 +2,8 @@
 <suite name="Banking">
     <test name="DepositTest">
         <classes>
-            <class name="product.Banking.Tests.TestDeposit"/>
+            <class name="product.Banking.TestDeposit"/>
+            <class name="product.Booking.TestFavourites"/>
         </classes>
     </test>
 </suite>

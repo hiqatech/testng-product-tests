@@ -15,14 +15,14 @@
         <compiler.target>18</compiler.target>
         <maven-surefire.version>2.22.2</maven-surefire.version>
 
-        <selenium.version>4.33.0</selenium.version>
+        <selenium.version>4.34.0</selenium.version>
         <selenium-server.version>3.141.59</selenium-server.version>
         <appium.version>9.4.0</appium.version>
         <rest-assured.version>4.4.0</rest-assured.version>
         <json.version>20231013</json.version>
         <cucumber.version>7.16.1</cucumber.version>
         <testng.version>7.10.1</testng.version>
-        <extent.version>5.1.1</extent.version>
+        <extent.version>4.0.9</extent.version>
         <extent.cucumber.adapter.version>1.14.0</extent.cucumber.adapter.version>
         <lombok.version>1.18.22</lombok.version>
         <commons.version>2.6</commons.version>
