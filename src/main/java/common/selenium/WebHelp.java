@@ -140,14 +140,7 @@ public class WebHelp {
         try {
             TakesScreenshot scrShot =((TakesScreenshot)webDriver);
             File SrcFile=scrShot.getScreenshotAs(OutputType.FILE);
-            String filePath = System.getProperty("filePath") + getTimeStamp()  + "_" +  screen +".jpg";
-            File DestFile=new File(filePath);
-            FileUtils.copyFile(SrcFile, DestFile);
-            String path = "<img src=\"file://\"" + filePath + "\" alt=\"\"/>";
-            sleep(1000);
-
-            test.pass(screen, MediaEntityBuilder.createScreenCaptureFromPath(filePath).build());
-            test.addScreenCaptureFromPath(filePath);
+            test.pass(screen, MediaEntityBuilder.createScreenCaptureFromPath(SrcFile.getPath()).build());
 
         } catch (Exception ex) {
             Hooks.print(ex.toString());
