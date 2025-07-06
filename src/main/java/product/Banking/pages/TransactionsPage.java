@@ -19,7 +19,7 @@ public class TransactionsPage {
     
     public static void verifyTransaction(String amount) {
         assertElementText(transaction1_amount,amount);
-        takeScreenShot("transaction1_amount");
+        takeScreenShot();
     }
 
     public static void selectReset() {

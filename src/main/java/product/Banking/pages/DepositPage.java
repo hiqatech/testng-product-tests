@@ -23,13 +23,13 @@ public class DepositPage {
         clickElement(deposit);
         assertElementDisplayed(deposit_successful);
         assertElementText(balance,"100");
-        takeScreenShot("deposit_successful");
+        takeScreenShot();
         sleep(2000);
     }
 
     public static void verifyBalance(String amount){
         assertElementText(balance,amount);
-        takeScreenShot("balance");
+        takeScreenShot();
     }
 
     public static void goToTransactions() {

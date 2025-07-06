@@ -135,12 +135,12 @@ public class WebHelp {
         }
     }
 
-    public static void takeScreenShot(String screen){
+    public static void takeScreenShot(){
         sleep(1000);
         try {
             TakesScreenshot scrShot =((TakesScreenshot)webDriver);
             File SrcFile=scrShot.getScreenshotAs(OutputType.FILE);
-            test.pass(screen, MediaEntityBuilder.createScreenCaptureFromPath(SrcFile.getPath()).build());
+            test.pass("", MediaEntityBuilder.createScreenCaptureFromPath(SrcFile.getPath()).build());
 
         } catch (Exception ex) {
             Hooks.print(ex.toString());
