@@ -10,19 +10,19 @@ public class AllURLs {
 
     public static String getProductURL()
     {
-        if (System.getProperty("runEnvironment").contains("QA")){
+        if (System.getProperty("environment").contains("QA")){
             if (System.getProperty("product").contains("Booking"))
                 return BookingQA;
             else if (System.getProperty("product").contains("Banking"))
                 return BankingQA;
             else return "Product URL has not been defined on QA environment";
             }
-        else if (System.getProperty("runEnvironment").contains("UAT")){
+        else if (System.getProperty("environment").contains("UAT")){
             if (System.getProperty("product").contains("Booking"))
                 return BookingUAT;
             else if (System.getProperty("product").contains("Banking"))
                 return BankingUAT;
-            else return "Product URL has not been defined on QA environment";
+            else return "Product URL has not been defined on UAT environment";
         }
         else
             return "Product URL has not been defined";
