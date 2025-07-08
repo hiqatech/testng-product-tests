@@ -33,6 +33,9 @@ public class Hooks {
         LocalDateTime dateTime = LocalDateTime.now();
 
         System.setProperty("projectPath",System.getProperty("user.dir"));
+        if(System.getProperty("projectPath").contains("testng-product-tests/testng-product-tests"))
+            System.setProperty("projectPath",System.getProperty("user.dir")
+                               .replace("testng-product-tests/testng-product-tests","testng-product-tests"))
         System.setProperty("systemTime", dateTime.format(DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss")));
         System.setProperty("userID",System.getProperty("user.home").replace("C:\\Users\\",""));
         System.setProperty("downloadPath",System.getProperty("user.home")+"\\Downloads\\");
