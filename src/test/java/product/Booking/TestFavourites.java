@@ -12,6 +12,15 @@ import static product.Booking.steps.SpecSteps.*;
 public class TestFavourites {
 
     @Test
+    public void testListOfBooks() {
+
+        Hooks.setup("BookingServiceFavourites", "QA");
+        getTokenForAutorizedUser();
+        getlistOfBooksAvailable();
+        get1stBookFromTheStoreAvailable();
+    }
+
+    @Test
     public void testFavourites(){
 
         Hooks.setup("BookingServiceFavourites","QA");

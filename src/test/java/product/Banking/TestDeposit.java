@@ -16,6 +16,18 @@ import static common.setup.Hooks.test;
 public class TestDeposit {
 
     @Test
+    public void testLogin() {
+
+        Hooks.setup("BankingWebDeposit", "LocalQAChrome");
+        WebHelp.startMyWebDriver();
+
+        LoginPage.loginWithUser("Rony Weasly");
+        test.pass("Logged in with Ron Weasly user");
+
+    }
+
+
+    @Test
     public void testDeposit() {
 
         Hooks.setup("BankingWebDeposit","LocalQAChrome");
