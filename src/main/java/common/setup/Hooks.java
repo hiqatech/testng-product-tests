@@ -60,6 +60,7 @@ public class Hooks {
 
     public static void tearDown()
     {
+        if(System.getProperty("product").contains("Web"))
         WebHelp.stopMyWebDriver();
         extent.flush();
         print("************************************************************************************");
