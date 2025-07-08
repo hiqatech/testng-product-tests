@@ -119,8 +119,8 @@ public class WebHelp {
 
     public static void stopMyWebDriver() {
         try {
-            webDriver.close();
-            webDriver.quit();
+            if(!driver.toString().contains("null")){
+            webDriver.close(); webDriver.quit();}
         } catch (Exception ex) {
             Hooks.print(ex.toString());
         }
