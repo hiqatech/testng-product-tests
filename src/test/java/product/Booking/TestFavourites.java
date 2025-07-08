@@ -27,7 +27,7 @@ public class TestFavourites {
     }
 
     @Test
-    public void testFavourites(){
+    public void testMyFavourite(){
         testListOfBooks();
         addBookToList();
         verifyBookAdded();
