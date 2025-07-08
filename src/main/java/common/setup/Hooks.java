@@ -7,6 +7,7 @@ import common.selenium.WebHelp;
 import org.apache.commons.io.FileUtils;
 
 import java.io.File;
+import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
@@ -54,19 +55,12 @@ public class Hooks {
         print("BaseURL : " + System.getProperty("baseURL"));
         print("************************************************************************************");
 
-        if (System.getProperty("product").contains("Web")){
-        try { File screenshots = new File(System.getProperty("filePath") + "\\screenshots\\");
-            FileUtils.cleanDirectory(screenshots);}
-        catch (Exception ex){}
-        }
+        cleanReportFolder();
 
     }
 
-
-
     public static void tearDown()
     {
-
         WebHelp.stopMyWebDriver();
         extent.flush();
         print("************************************************************************************");
@@ -76,6 +70,12 @@ public class Hooks {
     public static void print(String note){
         System.out.println(note);
 
+    }
+
+    public static void cleanReportFolder() {
+        try {
+            FileUtils.cleanDirectory(new File(System.getProperty("extentPath")));
+        }catch (Exception ex){}
     }
 
 }

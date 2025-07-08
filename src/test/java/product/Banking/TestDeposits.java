@@ -13,26 +13,22 @@ import static common.setup.Hooks.test;
  * Tests Deposit feature
  */
 
-public class TestDeposit {
+public class TestDeposits {
+
+    @BeforeTest
+    public void start(){
+        Hooks.setup("BankingWebDeposit", "LocalQAChrome");
+        WebHelp.startMyWebDriver();
+    }
 
     @Test
     public void testLogin() {
-
-        Hooks.setup("BankingWebDeposit", "LocalQAChrome");
-        WebHelp.startMyWebDriver();
-
         LoginPage.loginWithUser("Rony Weasly");
-        test.pass("Logged in with Ron Weasly user");
-
+        test.pass("Logged in with Rony Weasly user");
     }
-
 
     @Test
     public void testDeposit() {
-
-        Hooks.setup("BankingWebDeposit","LocalQAChrome");
-        WebHelp.startMyWebDriver();
-
         LoginPage.loginWithUser("Ron Weasly");
         test.pass("Logged in with Ron Weasly user");
         UserHomePage.goToDeposit();
@@ -47,7 +43,10 @@ public class TestDeposit {
         DepositPage.verifyBalance("0");
         DepositPage.logout();
         test.pass("Logged Out");
+    }
 
+    @AfterMethod
+    public void finish(){
         Hooks.tearDown();
     }
 

@@ -1,6 +1,9 @@
 package product.Booking;
 
+import common.selenium.WebHelp;
 import common.setup.Hooks;
+import org.testng.annotations.AfterTest;
+import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
 import static product.Booking.steps.SpecSteps.*;
@@ -11,27 +14,29 @@ import static product.Booking.steps.SpecSteps.*;
 
 public class TestFavourites {
 
-    @Test
-    public void testListOfBooks() {
-
+    @BeforeTest
+    public void start(){
         Hooks.setup("BookingServiceFavourites", "QA");
         getTokenForAutorizedUser();
+    }
+
+    @Test
+    public void testListOfBooks() {
         getlistOfBooksAvailable();
         get1stBookFromTheStoreAvailable();
     }
 
     @Test
     public void testFavourites(){
-
-        Hooks.setup("BookingServiceFavourites","QA");
-        getTokenForAutorizedUser();
-        getlistOfBooksAvailable();
-        get1stBookFromTheStoreAvailable();
+        testListOfBooks();
         addBookToList();
         verifyBookAdded();
         removeBookFromList();
         verifyBookRemoved();
+    }
 
+    @AfterTest
+    public void finish(){
         Hooks.tearDown();
     }
 

@@ -11,12 +11,10 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.remote.CapabilityType;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
-import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
-import org.testng.Reporter;
 
 import java.io.File;
 import java.net.URL;
@@ -121,6 +119,7 @@ public class WebHelp {
 
     public static void stopMyWebDriver() {
         try {
+            webDriver.close();
             webDriver.quit();
         } catch (Exception ex) {
             Hooks.print(ex.toString());
@@ -136,14 +135,13 @@ public class WebHelp {
     }
 
     public static void takeScreenShot(){
+        try{
         sleep(1000);
-        try {
             TakesScreenshot scrShot =((TakesScreenshot)webDriver);
             File SrcFile=scrShot.getScreenshotAs(OutputType.FILE);
             test.pass("", MediaEntityBuilder.createScreenCaptureFromPath(SrcFile.getPath()).build());
-
         } catch (Exception ex) {
-            Hooks.print(ex.toString());
+            failByEx(ex);
         }
     }
 
@@ -154,34 +152,64 @@ public class WebHelp {
     }
 
     public static void clickElement(By elementBy){
+        try{
         WebElement element = (new WebDriverWait(webDriver, Duration.ofSeconds(8)))
                 .until(ExpectedConditions.elementToBeClickable(elementBy));
         webDriver.findElement(elementBy).click();
         sleep(500);
+        } catch (Exception ex) {
+            failByEx(ex);
+        }
     }
 
     public static void typeElement(By elementBy, String text){
+        try{
         WebElement element = (new WebDriverWait(webDriver, Duration.ofSeconds(8)))
                 .until(ExpectedConditions.visibilityOfElementLocated(elementBy));
         webDriver.findElement(elementBy).sendKeys(text);
         sleep(500);
+        } catch (Exception ex) {
+            failByEx(ex);
+        }
     }
 
     public static void assertElementDisplayed(By elementBy){
+        try{
         Assert.assertTrue(webDriver.findElement(elementBy).isDisplayed());
+        } catch (Exception ex) {
+            failByEx(ex);
+        }
     }
 
     public static void assertElementText(By elementBy, String text){
+        try {
         Assert.assertEquals(webDriver.findElement(elementBy).getText(),text);
+        } catch (Exception ex) {
+            failByEx(ex);
+        }
     }
 
     public static void selectElementByText(By elementBy, String text){
+        try{
         Select select = new Select(webDriver.findElement(elementBy));
         select.selectByVisibleText(text);WebHelp.sleep(200);
+        } catch (Exception ex) {
+            failByEx(ex);
+        }
     }
 
     public static void navigateToUrl(String url){
+        try{
         webDriver.get(url); sleep(3000);
+        } catch (Exception ex) {
+            failByEx(ex);
+        }
+    }
+
+    public static void failByEx(Exception ex){
+        stopMyWebDriver();
+        test.fail(ex.toString());
+        Assert.assertTrue(false);
     }
 
 

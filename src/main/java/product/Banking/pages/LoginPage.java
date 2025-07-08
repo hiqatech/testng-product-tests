@@ -1,5 +1,6 @@
 package product.Banking.pages;
 
+import common.setup.Hooks;
 import org.openqa.selenium.By;
 import static common.selenium.WebHelp.*;
 
@@ -12,9 +13,9 @@ public class LoginPage {
     private static final By login_button = By.xpath("//button[text()='Login']");
 
     public static void loginWithUser(String userName) {
-        navigateToUrl(System.getProperty("baseURL"));
-        clickElement(customer_login);
-        selectElementByText(user_select,userName);
-        clickElement(login_button);
+            navigateToUrl(System.getProperty("baseURL"));
+            clickElement(customer_login);
+            selectElementByText(user_select, userName);
+            clickElement(login_button);
     }
 }
