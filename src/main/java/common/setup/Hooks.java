@@ -44,9 +44,8 @@ public class Hooks {
         System.setProperty("driverPath",System.getProperty("projectPath") + "\\src\\main\\resources\\webdrivers\\");
 
         print("************************************************************************************");
-
-        print("SystemTime : " + System.getProperty("systemTime"));
         print("Product Tests Starts");
+        print("SystemTime : " + System.getProperty("systemTime"));
         print("Test : : " + System.getProperty("product"));
         print("ProjectPath : " + System.getProperty("projectPath"));
         print("ExtentPath : " + System.getProperty("extentPath"));
