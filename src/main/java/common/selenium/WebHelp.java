@@ -119,7 +119,7 @@ public class WebHelp {
 
     public static void stopMyWebDriver() {
         try {
-            if(!driver.toString().contains("null")){
+            if(!webDriver.toString().contains("null")){
             webDriver.close(); webDriver.quit();}
         } catch (Exception ex) {
             Hooks.print(ex.toString());
