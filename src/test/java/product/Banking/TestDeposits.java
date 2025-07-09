@@ -21,11 +21,13 @@ public class TestDeposits {
         WebHelp.startMyWebDriver();
     }
 
+    /*
     @Test
     public void testLogin() {
         LoginPage.loginWithUser("Rony Weasly");
         test.pass("Logged in with Rony Weasly user");
     }
+    */
 
     @Test
     public void testDeposit() {

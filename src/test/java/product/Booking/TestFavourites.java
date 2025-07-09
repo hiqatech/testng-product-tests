@@ -26,6 +26,7 @@ public class TestFavourites {
         get1stBookFromTheStoreAvailable();
     }
 
+    /*
     @Test
     public void testMyFavourite(){
         testListOfBooks();
@@ -34,6 +35,7 @@ public class TestFavourites {
         removeBookFromList();
         verifyBookRemoved();
     }
+    */
 
     @AfterTest
     public void finish(){

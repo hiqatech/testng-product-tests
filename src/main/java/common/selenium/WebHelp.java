@@ -116,20 +116,17 @@ public class WebHelp {
         }
     }
 
-
     public static void stopMyWebDriver() {
         try {
-            webDriver.close(); webDriver.quit();}
-        } catch (Exception ex) {
-        }
+            webDriver.close();
+            webDriver.quit();
+        } catch (Exception ex) {}
     }
 
     public static void sleep(int sleep) {
         try {
             webDriver.wait(sleep);
-        } catch (Exception ex) {
-            Hooks.print(ex.toString());
-        }
+        } catch (Exception ex) {}
     }
 
     public static void takeScreenShot(){
@@ -207,7 +204,7 @@ public class WebHelp {
     public static void failByEx(Exception ex){
         stopMyWebDriver();
         test.fail(ex.toString());
-        Assert.assertTrue(false);
+        Assert.assertTrue(false,ex.toString());
     }
 
 
