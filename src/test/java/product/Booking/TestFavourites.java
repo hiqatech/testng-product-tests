@@ -1,45 +1,37 @@
 package product.Booking;
 
-import common.selenium.WebHelp;
 import common.setup.Hooks;
-import org.testng.annotations.AfterTest;
-import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
 import static product.Booking.steps.SpecSteps.*;
 
-/***
+ /*
  * Tests Favourites feature
  */
 
 public class TestFavourites {
 
-    @BeforeTest
-    public void start(){
-        Hooks.setup("BookingServiceFavourites", "QA");
-        getTokenForAutorizedUser();
-    }
-
     @Test
     public void testListOfBooks() {
+        Hooks.setup("BookingServiceFavourites", "QA");
         getlistOfBooksAvailable();
-        get1stBookFromTheStoreAvailable();
+        get1stBookAvailable();
+        Hooks.tearDown();
     }
 
     /*
     @Test
     public void testMyFavourite(){
-        testListOfBooks();
+        Hooks.setup("BookingServiceFavourites", "QA");
+        getlistOfBooksAvailable();
+        get1stBookAvailable();
+        getTokenForAutorizedUser();
         addBookToList();
         verifyBookAdded();
         removeBookFromList();
         verifyBookRemoved();
-    }
-    */
-
-    @AfterTest
-    public void finish(){
         Hooks.tearDown();
     }
+    */
 
 }

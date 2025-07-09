@@ -9,7 +9,7 @@ import product.Banking.pages.TransactionsPage;
 import product.Banking.pages.UserHomePage;
 import static common.setup.Hooks.test;
 
-/***
+ /*
  * Tests Deposit feature
  */
 

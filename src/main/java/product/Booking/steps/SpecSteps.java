@@ -35,11 +35,10 @@ public class SpecSteps {
         ServiceHelp.jsonString = ServiceHelp.response.asString();
         List<Map<String, String>> books = JsonPath.from(ServiceHelp.jsonString).get("books");
         Assert.assertTrue(books.size() > 0);
-        bookId = books.get(0).get("isbn");
-        System.out.println("BookID : " + bookId);
+        System.out.println("Books : " + books);
     }
 
-    public static void get1stBookFromTheStoreAvailable() {
+    public static void get1stBookAvailable() {
         ServiceHelp.jsonString = ServiceHelp.response.asString();
         List<Map<String, String>> books = JsonPath.from(ServiceHelp.jsonString).get("books");
         Assert.assertFalse(books.isEmpty());
