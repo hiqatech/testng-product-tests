@@ -1,3 +1,4 @@
+name: TestNG-Product-Tests
 on: [push]
 
 jobs:
