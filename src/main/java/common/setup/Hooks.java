@@ -55,8 +55,6 @@ public class Hooks {
         print("Product : " + System.getProperty("product"));
         print("Environment : " + System.getProperty("environment"));
         print("BaseURL : " + System.getProperty("baseURL"));
-        print("************************************************************************************");
-
         cleanReportFolder();
 
     }
@@ -66,8 +64,9 @@ public class Hooks {
         if(System.getProperty("product").contains("Web"))
         WebHelp.stopMyWebDriver();
         extent.flush();
-        print("************************************************************************************");
         print("Product Tests Ends");
+        print("************************************************************************************");
+
     }
     
     public static void print(String note){

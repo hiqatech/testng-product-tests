@@ -118,7 +118,6 @@ public class WebHelp {
 
     public static void stopMyWebDriver() {
         try {
-            webDriver.close();
             webDriver.quit();
         } catch (Exception ex) {}
     }
