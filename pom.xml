@@ -17,7 +17,7 @@
 
         <selenium.version>4.34.0</selenium.version>
         <selenium-server.version>3.141.59</selenium-server.version>
-        <appium.version>9.4.0</appium.version>
+        <appium.version>9.5.0</appium.version>
         <rest-assured.version>4.4.0</rest-assured.version>
         <json.version>20231013</json.version>
         <cucumber.version>7.16.1</cucumber.version>
@@ -80,6 +80,16 @@
             <groupId>io.appium</groupId>
             <artifactId>java-client</artifactId>
             <version>${appium.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.seleniumhq.selenium</groupId>
+            <artifactId>selenium-api</artifactId>
+            <version>${selenium.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.seleniumhq.selenium</groupId>
+            <artifactId>selenium-remote-driver</artifactId>
+            <version>${selenium.version}</version>
         </dependency>
         <dependency>
             <groupId>io.rest-assured</groupId>
