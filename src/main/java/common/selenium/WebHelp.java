@@ -29,7 +29,7 @@ public class WebHelp {
 
     public static WebDriver webDriver;
     public static int waitTimeMax= 5000;
-    public static int waitTime = 200;
+    public static int waitTime = 500;
     public static int waitMax= 9;
 
     public static void startMyWebDriver() {
