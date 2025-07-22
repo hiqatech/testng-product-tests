@@ -34,6 +34,7 @@ public class DepositPage {
 
     public static void goToTransactions() {
         clickElement(transactions_button);
+        sleep(2000);
     }
 
     public static void logout() {
