@@ -28,6 +28,9 @@ import static common.setup.Hooks.test;
 public class WebHelp {
 
     public static WebDriver webDriver;
+    public static int waitTimeMax= 5000;
+    public static int waitTime = 200;
+    public static int waitMax= 9;
 
     public static void startMyWebDriver() {
         try {
@@ -134,15 +137,9 @@ public class WebHelp {
         }
     }
 
-    public static String getTimeStamp(){
-        String nano = String.valueOf(LocalDateTime.now().getNano());
-        String date = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMddHHmmss"));
-        return  date + "-" + nano;
-    }
-
     public static void clickElement(By elementBy){
         try{
-        WebElement element = (new WebDriverWait(webDriver, Duration.ofSeconds(8)))
+        WebElement element = (new WebDriverWait(webDriver, Duration.ofSeconds(waitMax)))
                 .until(ExpectedConditions.elementToBeClickable(elementBy));
         webDriver.findElement(elementBy).click();
         sleep(500);
@@ -153,7 +150,7 @@ public class WebHelp {
 
     public static void typeElement(By elementBy, String text){
         try{
-        WebElement element = (new WebDriverWait(webDriver, Duration.ofSeconds(8)))
+        WebElement element = (new WebDriverWait(webDriver, Duration.ofSeconds(waitMax)))
                 .until(ExpectedConditions.visibilityOfElementLocated(elementBy));
         webDriver.findElement(elementBy).sendKeys(text);
         sleep(500);
@@ -164,7 +161,9 @@ public class WebHelp {
 
     public static void assertElementDisplayed(By elementBy){
         try{
-        Assert.assertTrue(webDriver.findElement(elementBy).isDisplayed());
+            WebElement element = (new WebDriverWait(webDriver, Duration.ofSeconds(waitMax)))
+                    .until(ExpectedConditions.visibilityOfElementLocated(elementBy));
+        Assert.assertTrue(element.isDisplayed());
         } catch (Exception ex) {
             failWebByEx(ex);
         }
@@ -172,7 +171,9 @@ public class WebHelp {
 
     public static void assertElementText(By elementBy, String text){
         try {
-        Assert.assertEquals(webDriver.findElement(elementBy).getText(),text);
+            WebElement element = (new WebDriverWait(webDriver, Duration.ofSeconds(waitMax)))
+                    .until(ExpectedConditions.visibilityOfElementLocated(elementBy));
+        Assert.assertEquals(element.getText(),text);
         } catch (Exception ex) {
             failWebByEx(ex);
         }
@@ -180,6 +181,8 @@ public class WebHelp {
 
     public static void selectElementByText(By elementBy, String text){
         try{
+            WebElement element = (new WebDriverWait(webDriver, Duration.ofSeconds(waitMax)))
+                    .until(ExpectedConditions.visibilityOfElementLocated(elementBy));
         Select select = new Select(webDriver.findElement(elementBy));
         select.selectByVisibleText(text);WebHelp.sleep(200);
         } catch (Exception ex) {
@@ -202,6 +205,61 @@ public class WebHelp {
         Assert.assertTrue(false,ex.toString());
     }
 
+
+    public static String getTimeStamp(){
+        String nano = String.valueOf(LocalDateTime.now().getNano());
+        String date = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMddHHmmss"));
+        return  date + "-" + nano;
+    }
+
+
+    ///////////////////////////////////////////////////////////////////////////////////////////////
+
+    public static WebElement getWebElement(String elementSelector)
+    {
+        return webDriver.findElement(By.xpath(elementSelector));
+    }
+
+    public static Boolean isDisplayed(String elementSelector)
+    {
+            WebElement webElement  = getWebElement(elementSelector);
+            if(webElement.isDisplayed() || webElement.isEnabled())
+                return true;
+            else return false;
+    }
+
+    public static boolean waitToAppear(String elementSelector)
+    {
+        double startTime = 0;
+        while (startTime < waitTimeMax)
+        {
+            sleep(waitTime);
+            if(isDisplayed(elementSelector))
+                return true;
+            else
+            {
+                sleep(waitTime);
+                startTime = startTime + waitTime;
+            }
+        }
+        return isDisplayed(elementSelector);
+    }
+
+    public static boolean waitToDisappear(String elementSelector)
+    {
+        double startTime = 0;
+        while (startTime < waitTimeMax)
+        {
+            if(!isDisplayed(elementSelector))
+                return true;
+            else
+            {
+                sleep(waitTime);
+                startTime = startTime + waitTime;
+            }
+        }
+        return false;
+    }
 
 }
 
