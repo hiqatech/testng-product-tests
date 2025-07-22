@@ -120,6 +120,14 @@ public class WebHelp {
         } catch (Exception ex) {}
     }
 
+    public static void navigateToUrl(String url){
+        try{
+            webDriver.get(url); sleep(3000);
+        } catch (Exception ex) {
+            failWebByEx(ex);
+        }
+    }
+
     public static void sleep(int sleep) {
         try {
             webDriver.wait(sleep);
@@ -139,10 +147,8 @@ public class WebHelp {
 
     public static void clickElement(By elementBy){
         try{
-        WebElement element = (new WebDriverWait(webDriver, Duration.ofSeconds(waitMax)))
-                .until(ExpectedConditions.elementToBeClickable(elementBy));
-        webDriver.findElement(elementBy).click();
-        sleep(500);
+            Assert.assertTrue(waitToAppear(elementBy));
+            webDriver.findElement(elementBy).click();
         } catch (Exception ex) {
             failWebByEx(ex);
         }
@@ -150,9 +156,8 @@ public class WebHelp {
 
     public static void typeElement(By elementBy, String text){
         try{
-        WebElement element = (new WebDriverWait(webDriver, Duration.ofSeconds(waitMax)))
-                .until(ExpectedConditions.visibilityOfElementLocated(elementBy));
-        webDriver.findElement(elementBy).sendKeys(text);
+            Assert.assertTrue(waitToAppear(elementBy));
+            getWebElement(elementBy).sendKeys(text);
         sleep(500);
         } catch (Exception ex) {
             failWebByEx(ex);
@@ -161,9 +166,15 @@ public class WebHelp {
 
     public static void assertElementDisplayed(By elementBy){
         try{
-            WebElement element = (new WebDriverWait(webDriver, Duration.ofSeconds(waitMax)))
-                    .until(ExpectedConditions.visibilityOfElementLocated(elementBy));
-        Assert.assertTrue(element.isDisplayed());
+            Assert.assertTrue(waitToAppear(elementBy));
+        } catch (Exception ex) {
+            failWebByEx(ex);
+        }
+    }
+
+    public static void assertElementNotDisplayed(By elementBy){
+        try{
+            Assert.assertTrue(waitToDisappear(elementBy));
         } catch (Exception ex) {
             failWebByEx(ex);
         }
@@ -171,9 +182,8 @@ public class WebHelp {
 
     public static void assertElementText(By elementBy, String text){
         try {
-            WebElement element = (new WebDriverWait(webDriver, Duration.ofSeconds(waitMax)))
-                    .until(ExpectedConditions.visibilityOfElementLocated(elementBy));
-        Assert.assertEquals(element.getText(),text);
+            Assert.assertTrue(waitToAppear(elementBy));
+            Assert.assertEquals(getWebElement(elementBy).getText(),text);
         } catch (Exception ex) {
             failWebByEx(ex);
         }
@@ -181,22 +191,15 @@ public class WebHelp {
 
     public static void selectElementByText(By elementBy, String text){
         try{
-            WebElement element = (new WebDriverWait(webDriver, Duration.ofSeconds(waitMax)))
-                    .until(ExpectedConditions.visibilityOfElementLocated(elementBy));
-        Select select = new Select(webDriver.findElement(elementBy));
-        select.selectByVisibleText(text);WebHelp.sleep(200);
+            Assert.assertTrue(waitToAppear(elementBy));
+            Select select = new Select(webDriver.findElement(elementBy));
+            select.selectByVisibleText(text);WebHelp.sleep(200);
         } catch (Exception ex) {
             failWebByEx(ex);
         }
     }
 
-    public static void navigateToUrl(String url){
-        try{
-        webDriver.get(url); sleep(3000);
-        } catch (Exception ex) {
-            failWebByEx(ex);
-        }
-    }
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     public static void failWebByEx(Exception ex){
         takeScreenShot();
@@ -205,36 +208,34 @@ public class WebHelp {
         Assert.assertTrue(false,ex.toString());
     }
 
-
     public static String getTimeStamp(){
         String nano = String.valueOf(LocalDateTime.now().getNano());
         String date = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMddHHmmss"));
         return  date + "-" + nano;
     }
 
-
     ///////////////////////////////////////////////////////////////////////////////////////////////
 
-    public static WebElement getWebElement(String elementSelector)
+    public static WebElement getWebElement(By elementBy)
     {
-        return webDriver.findElement(By.xpath(elementSelector));
+        return webDriver.findElement(elementBy);
     }
 
-    public static Boolean isDisplayed(String elementSelector)
+    public static Boolean isDisplayed(By elementBy)
     {
-            WebElement webElement  = getWebElement(elementSelector);
+            WebElement webElement  = getWebElement(elementBy);
             if(webElement.isDisplayed() || webElement.isEnabled())
                 return true;
             else return false;
     }
 
-    public static boolean waitToAppear(String elementSelector)
+    public static boolean waitToAppear(By elementBy)
     {
         double startTime = 0;
         while (startTime < waitTimeMax)
         {
             sleep(waitTime);
-            if(isDisplayed(elementSelector))
+            if(isDisplayed(elementBy))
                 return true;
             else
             {
@@ -242,15 +243,15 @@ public class WebHelp {
                 startTime = startTime + waitTime;
             }
         }
-        return isDisplayed(elementSelector);
+        return isDisplayed(elementBy);
     }
 
-    public static boolean waitToDisappear(String elementSelector)
+    public static boolean waitToDisappear(By elementBy)
     {
         double startTime = 0;
         while (startTime < waitTimeMax)
         {
-            if(!isDisplayed(elementSelector))
+            if(!isDisplayed(elementBy))
                 return true;
             else
             {
