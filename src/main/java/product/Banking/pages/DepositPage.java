@@ -21,10 +21,10 @@ public class DepositPage {
     public static void makeDeposit(String amount){
         typeElement(amount_field,amount);
         clickElement(deposit);
+        sleep(2000);
         assertElementDisplayed(deposit_successful);
         assertElementText(balance,"100");
         takeScreenShot();
-        sleep(2000);
     }
 
     public static void verifyBalance(String amount){
