@@ -1,5 +1,7 @@
 package common.setup;
 
+import common.appium.AppHelp;
+
 public class AllURLs {
 
     static final String BankingQA = "https://www.globalsqa.com/angularJs-protractor/BankingProject";
@@ -15,6 +17,8 @@ public class AllURLs {
                 return BookingQA;
             else if (System.getProperty("product").contains("Banking"))
                 return BankingQA;
+            else if (System.getProperty("product").contains("MainApp"))
+                return AppHelp.url;
             else return "Product URL has not been defined on QA environment";
             }
         else if (System.getProperty("environment").contains("UAT")){
@@ -22,6 +26,8 @@ public class AllURLs {
                 return BookingUAT;
             else if (System.getProperty("product").contains("Banking"))
                 return BankingUAT;
+            else if (System.getProperty("product").contains("APP"))
+                return AppHelp.url;
             else return "Product URL has not been defined on UAT environment";
         }
         else

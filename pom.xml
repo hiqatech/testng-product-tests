@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.hiqatech</groupId>
-    <artifactId>java-selenium-testng</artifactId>
+    <artifactId>testng-product-tests</artifactId>
     <version>1.0-SNAPSHOT</version>
 
     <properties>

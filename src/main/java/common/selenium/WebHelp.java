@@ -1,7 +1,6 @@
 package common.selenium;
 
 import com.aventstack.extentreports.MediaEntityBuilder;
-import common.setup.Hooks;
 import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
@@ -23,13 +22,14 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 
+import static common.setup.Hooks.print;
 import static common.setup.Hooks.test;
 
 public class WebHelp {
 
     public static WebDriver webDriver;
 
-    public static WebDriver startMyWebDriver() {
+    public static void startMyWebDriver() {
         try {
             DesiredCapabilities capabilities;
             if (System.getProperty("environment").contains("Chrome"))
@@ -39,13 +39,10 @@ public class WebHelp {
             else if (System.getProperty("environment").contains("Firefox"))
                 System.setProperty("driver", "Firefox");
 
-            String driver = System.getProperty("driver");
-            String driverPath = System.getProperty("driverPath");
-
-            switch (driver) {
+            switch (System.getProperty("driver")) {
 
                 case "Chrome":
-                    String chromeDriverPath = driverPath + "chromedriver.exe";
+                    String chromeDriverPath = System.getProperty("driverPath") + "chromedriver.exe";
                     System.setProperty("webdriver.chrome.driver", chromeDriverPath);
 
                     HashMap<String, Object> chromePrefs = new HashMap<>();
@@ -67,13 +64,13 @@ public class WebHelp {
                         webDriver = new RemoteWebDriver(new URL(System.getProperty("seleniumGrid")), capabilities);
                     else if (System.getProperty("environment").contains("Local"))
                         webDriver = new ChromeDriver(options);
-                    else Hooks.print("seleniumGrid" + " has not been defined.");
+                    else print("seleniumGrid" + " has not been defined.");
 
                     break;
 
                 case "Edge":
 
-                    String edgeDriverPath = driverPath + "msedgedriver.exe";
+                    String edgeDriverPath = System.getProperty("driverPath") + "msedgedriver.exe";
                     System.setProperty("webdriver.edge.driver", edgeDriverPath);
 
                     capabilities = new DesiredCapabilities();
@@ -83,24 +80,24 @@ public class WebHelp {
                         webDriver = new RemoteWebDriver(new URL(System.getProperty("seleniumGrid")), capabilities);
                     else if (System.getProperty("environment").contains("Local"))
                         webDriver = new EdgeDriver();
-                    else Hooks.print(System.getProperty("runEnvironment") + " has not been defined yet.");
+                    else print(System.getProperty("runEnvironment") + " has not been defined yet.");
 
                     break;
 
                 case "Firefox":
 
                     capabilities = new DesiredCapabilities();
-                    String firefoxDriverPath = driverPath + "geckodriver.exe";
+                    String firefoxDriverPath = System.getProperty("driverPath") + "geckodriver.exe";
                     System.setProperty("webdriver.gecko.driver", firefoxDriverPath);
 
                     if (System.getProperty("runEnvironment").contains("Remote"))
                         webDriver = new RemoteWebDriver(new URL(System.getProperty("seleniumGrid")), capabilities);
                     else if (System.getProperty("environment").contains("Local"))
                         webDriver = new FirefoxDriver();
-                    else Hooks.print(System.getProperty("environment") + " has not been defined yet.");
+                    else print(System.getProperty("environment") + " has not been defined yet.");
 
                 default:
-                    Hooks.print("webDriver " + driver + " has not been defined yet");
+                    print("webDriver " + System.getProperty("driver") + " has not been defined yet");
 
             }
 
@@ -108,11 +105,9 @@ public class WebHelp {
             webDriver.manage().timeouts().implicitlyWait(Duration.ofSeconds(7));
             webDriver.manage().window().maximize();
 
-            return webDriver;
 
         } catch (Exception ex) {
-            Hooks.print(ex.toString());
-            return webDriver;
+            failWebByEx(ex);
         }
     }
 
@@ -135,7 +130,7 @@ public class WebHelp {
             File SrcFile=scrShot.getScreenshotAs(OutputType.FILE);
             test.pass("", MediaEntityBuilder.createScreenCaptureFromPath(SrcFile.getPath()).build());
         } catch (Exception ex) {
-            failByEx(ex);
+            failWebByEx(ex);
         }
     }
 
@@ -152,7 +147,7 @@ public class WebHelp {
         webDriver.findElement(elementBy).click();
         sleep(500);
         } catch (Exception ex) {
-            failByEx(ex);
+            failWebByEx(ex);
         }
     }
 
@@ -163,7 +158,7 @@ public class WebHelp {
         webDriver.findElement(elementBy).sendKeys(text);
         sleep(500);
         } catch (Exception ex) {
-            failByEx(ex);
+            failWebByEx(ex);
         }
     }
 
@@ -171,7 +166,7 @@ public class WebHelp {
         try{
         Assert.assertTrue(webDriver.findElement(elementBy).isDisplayed());
         } catch (Exception ex) {
-            failByEx(ex);
+            failWebByEx(ex);
         }
     }
 
@@ -179,7 +174,7 @@ public class WebHelp {
         try {
         Assert.assertEquals(webDriver.findElement(elementBy).getText(),text);
         } catch (Exception ex) {
-            failByEx(ex);
+            failWebByEx(ex);
         }
     }
 
@@ -188,7 +183,7 @@ public class WebHelp {
         Select select = new Select(webDriver.findElement(elementBy));
         select.selectByVisibleText(text);WebHelp.sleep(200);
         } catch (Exception ex) {
-            failByEx(ex);
+            failWebByEx(ex);
         }
     }
 
@@ -196,11 +191,12 @@ public class WebHelp {
         try{
         webDriver.get(url); sleep(3000);
         } catch (Exception ex) {
-            failByEx(ex);
+            failWebByEx(ex);
         }
     }
 
-    public static void failByEx(Exception ex){
+    public static void failWebByEx(Exception ex){
+        takeScreenShot();
         stopMyWebDriver();
         test.fail(ex.toString());
         Assert.assertTrue(false,ex.toString());

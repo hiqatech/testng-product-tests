@@ -7,7 +7,6 @@ import common.selenium.WebHelp;
 import org.apache.commons.io.FileUtils;
 
 import java.io.File;
-import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
@@ -66,7 +65,6 @@ public class Hooks {
         extent.flush();
         print("Product Tests Ends");
         print("************************************************************************************");
-
     }
     
     public static void print(String note){
