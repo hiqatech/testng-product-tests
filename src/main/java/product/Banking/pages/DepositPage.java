@@ -2,6 +2,7 @@ package product.Banking.pages;
 
 import org.openqa.selenium.By;
 import static common.selenium.WebHelp.*;
+import static common.setup.Hooks.test;
 
 public class DepositPage {
    
@@ -21,24 +22,26 @@ public class DepositPage {
     public static void makeDeposit(String amount){
         typeElement(amount_field,amount);
         clickElement(deposit);
-        sleep(2000);
+        sleep(1000);
         assertElementDisplayed(deposit_successful);
         assertElementText(balance,"100");
         takeScreenShot();
+        test.pass("Made " + amount + " Deposit");
     }
 
     public static void verifyBalance(String amount){
         assertElementText(balance,amount);
         takeScreenShot();
+        test.pass("Balance " + amount + " Confirmed");
     }
 
     public static void goToTransactions() {
         clickElement(transactions_button);
-        sleep(2000);
     }
 
     public static void logout() {
         clickElement(logout_button);
+        test.pass("Logged Out");
     }
 }
 

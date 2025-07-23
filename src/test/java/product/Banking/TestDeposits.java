@@ -32,19 +32,14 @@ public class TestDeposits {
     @Test
     public void testDeposit() {
         LoginPage.loginWithUser("Ron Weasly");
-        test.pass("Logged in with Ron Weasly user");
         UserHomePage.goToDeposit();
         DepositPage.makeDeposit("100");
-        test.pass("Made 100 Deposit");
         DepositPage.goToTransactions();
         TransactionsPage.verifyTransaction("100");
-        test.pass("Transaction 100 Confirmed");
         TransactionsPage.selectReset();
-        test.pass("Transactions Reset");
         TransactionsPage.goToBack();
         DepositPage.verifyBalance("0");
         DepositPage.logout();
-        test.pass("Logged Out");
     }
 
     @AfterMethod

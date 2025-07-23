@@ -10,9 +10,7 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.remote.CapabilityType;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
-import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
-import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 
 import java.io.File;
@@ -29,7 +27,7 @@ public class WebHelp {
 
     public static WebDriver webDriver;
     public static int waitTimeMax= 5000;
-    public static int waitTime = 500;
+    public static int waitTime = 200;
 
     public static void startMyWebDriver() {
         try {
@@ -129,7 +127,7 @@ public class WebHelp {
 
     public static void sleep(int sleep) {
         try {
-            webDriver.wait(sleep);
+            Thread.sleep(sleep);
         } catch (Exception ex) {}
     }
 

@@ -3,6 +3,7 @@ package product.Banking.pages;
 import common.setup.Hooks;
 import org.openqa.selenium.By;
 import static common.selenium.WebHelp.*;
+import static common.setup.Hooks.test;
 
 public class TransactionsPage {
     
@@ -21,10 +22,12 @@ public class TransactionsPage {
     public static void verifyTransaction(String amount) {
         assertElementText(transaction1_amount,amount);
         takeScreenShot();
+        test.pass("Transaction " + amount + " Confirmed");
     }
 
     public static void selectReset() {
         clickElement(reset_button);
+        test.pass("Transactions Reset");
     }
 
     public static void goToBack() {
