@@ -44,6 +44,7 @@ public class Hooks {
         System.setProperty("filePath",System.getProperty("projectPath") + "\\src\\test\\resources\\files\\");
         System.setProperty("screenshotPath",System.getProperty("projectPath") + "\\test-output\\screenshots\\");
         System.setProperty("driverPath",System.getProperty("projectPath") + "\\src\\main\\resources\\webdrivers\\");
+        System.setProperty("appDir",System.getProperty("projectPath") + "\\src\\main\\resources\\apps\\");
 
         print("************************************************************************************");
         print("Product Tests Starts");

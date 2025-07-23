@@ -26,6 +26,8 @@ public class AppHelp {
     public static String ipAddress = "127.0.0.1";
     public static String port = "4723";
     public static String url = "http://" + ipAddress + ":" + port + "/";
+    public static String appName = "General-store.apk";
+    public static String appPath = System.getProperty("appDir") + appName;
     public static AppiumDriverLocalService appiumService;
     public static AndroidDriver androidDriver;
     public static IOSDriver iosDriver;
@@ -47,7 +49,7 @@ public class AppHelp {
 
             if(platform.equals("android")) {
                 options.setDeviceName("Pixel_API_28");
-                options.setApp(System.getProperty("user.dir") + "\\src\\test\\resources\\ApiDemos.apk");
+                options.setApp(appPath);
 
                 androidDriver = new AndroidDriver(new URL(url), options);
                 androidDriver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
@@ -74,6 +76,17 @@ public class AppHelp {
             androidDriver.quit();
             iosDriver.quit();
             appiumService.stop();
+        }
+        catch(Exception ex)
+        {}
+    }
+
+    public static void installAppbyCommandLie()
+    {
+        try
+        {
+            //Start Emulator then
+            //Android/Sdk/platform-tools adb install pathToApk
         }
         catch(Exception ex)
         {}
@@ -134,6 +147,23 @@ public class AppHelp {
         {failAppByEx(ex); return null;}
     }
 
+    public static void dropDownElement(String locator, String value) {
+        try {
+            androidDriver.findElement(AppiumBy.xpath(locator)).click();
+            androidDriver.findElement(AppiumBy.androidUIAutomator(
+                    "new UiScrollable(new UiSelector()).scrollIntoView(text("+locator+"));"));
+            androidDriver.findElement(AppiumBy.xpath("android.widget.TextView[@text = "+value+"]")).click();
+        } catch(Exception ex)
+        {failAppByEx(ex);}
+    }
+
+    public static void radioElement(String locator) {
+        try {
+            androidDriver.findElement(AppiumBy.id("com.androidsample.generalstore:id/radiofemale")).click();
+        } catch(Exception ex)
+        {failAppByEx(ex);}
+    }
+
     public static void scrollToElement(String ele) {
         try {
             androidDriver.findElement(AppiumBy.androidUIAutomator(
@@ -167,6 +197,8 @@ public class AppHelp {
         catch(Exception ex)
         {failAppByEx(ex);}
     }
+
+
 
     public static void waitSec(int sleep) {
         try {
