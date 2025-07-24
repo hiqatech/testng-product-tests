@@ -17,7 +17,7 @@ public class AllURLs {
                 return BookingQA;
             else if (System.getProperty("product").contains("Banking"))
                 return BankingQA;
-            else if (System.getProperty("product").contains("MainApp"))
+            else if (System.getProperty("product").contains("Store"))
                 return AppHelp.url;
             else return "Product URL has not been defined on QA environment";
             }
@@ -26,7 +26,7 @@ public class AllURLs {
                 return BookingUAT;
             else if (System.getProperty("product").contains("Banking"))
                 return BankingUAT;
-            else if (System.getProperty("product").contains("APP"))
+            else if (System.getProperty("product").contains("Store"))
                 return AppHelp.url;
             else return "Product URL has not been defined on UAT environment";
         }

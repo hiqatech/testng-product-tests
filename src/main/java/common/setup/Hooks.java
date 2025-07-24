@@ -56,7 +56,6 @@ public class Hooks {
         print("Environment : " + System.getProperty("environment"));
         print("BaseURL : " + System.getProperty("baseURL"));
         cleanReportFolder();
-
     }
 
     public static void tearDown()

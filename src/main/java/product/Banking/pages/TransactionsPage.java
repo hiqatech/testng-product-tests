@@ -1,6 +1,5 @@
 package product.Banking.pages;
 
-import common.setup.Hooks;
 import org.openqa.selenium.By;
 import static common.selenium.WebHelp.*;
 import static common.setup.Hooks.test;
