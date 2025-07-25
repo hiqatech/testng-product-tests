@@ -17,7 +17,7 @@ public class TestDeposits {
     @BeforeTest
     public void start(){
         Hooks.setup("BankingWebDeposit", "LocalQAChrome");
-        WebHelp.startMyWebDriver();
+        WebHelp.startWebDriver();
     }
 
     /*

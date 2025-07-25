@@ -1,7 +1,5 @@
 package product.Store;
 
-import static common.appium.AppHelp.*;
-
 import common.appium.AppHelp;
 import common.setup.Hooks;
 import org.testng.annotations.AfterTest;
@@ -14,15 +12,14 @@ public class TestShop {
     @BeforeTest
     public void start(){
         Hooks.setup("StoreAppShop", "VirtualQA");
-        AppHelp.startAppDriver("android","Pixel28");
+        AppHelp.startAppDriver("android","Pixel28", "General-store.apk");
     }
     @Test
     public void testShop() {
-        waitSec(2000);
-        selectDropDown(MainPage.countryDropDown,  "text(\"Switzerland\")");
-        typeElement(MainPage.nameField, "Zoltan");
-        setRadio(MainPage.radioMale);
-        clickElement(MainPage.letsGoShop);
+        MainPage.selectCountry("text(\"Switzerland\")");
+        MainPage.typeName("Zoltan");
+        MainPage.setSex("Male");
+        MainPage.lestsGoShop();
     }
 
     @AfterTest

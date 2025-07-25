@@ -2,6 +2,7 @@ package product.Banking.pages;
 
 import org.openqa.selenium.By;
 import static common.selenium.WebHelp.*;
+import static common.setup.Hooks.AssertStep;
 
 public class UserHomePage {
 
@@ -16,6 +17,6 @@ public class UserHomePage {
     private static final By currency = By.xpath( "//*[text()='Account Number : ']//following::strong[3]");
 
     public static void goToDeposit() {
-        clickElement(deposit_button);
+        AssertStep(clickElement(deposit_button,"deposit_button"));
     }
 }

@@ -10,13 +10,10 @@ import io.appium.java_client.service.local.AppiumServiceBuilder;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.remote.RemoteWebElement;
-import org.testng.Assert;
 
 import java.io.File;
 import java.net.URL;
 import java.time.Duration;
-
-import static common.setup.Hooks.test;
 
 public class AppHelp {
 
@@ -32,7 +29,7 @@ public class AppHelp {
     public static IOSDriver iosDriver;
 
 
-    public static void startAppDriver(String platform, String device) {
+    public static String startAppDriver(String platform, String device, String app) {
         try {
 
             appiumService = new AppiumServiceBuilder()
@@ -48,7 +45,7 @@ public class AppHelp {
 
             if(platform.equals("android")) {
                 options.setDeviceName(device);
-                options.setApp(System.getProperty("appDir") + appName);
+                options.setApp(System.getProperty("appDir") + app);
 
                 androidDriver = new AndroidDriver(new URL(url), options);
                 androidDriver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
@@ -60,13 +57,13 @@ public class AppHelp {
             }
             waitSec(500);
 
+            return "PASS : I start the " + platform + " appDriver";
         }
         catch(Exception ex)
-        {
-            failAppByEx(ex);}
+        { return ex.toString();}
     }
 
-    public static void stopAppDriver()
+    public static String stopAppDriver()
     {
         try
         {
@@ -74,23 +71,25 @@ public class AppHelp {
             iosDriver.quit();
             appiumService.stop();
             waitSec(500);
+            return "PASS : I stop the appDriver";
         }
         catch(Exception ex)
-        {}
+        { return ex.toString();}
     }
 
-    public static void installAppbyCommandLie()
+    public static String installAppByCommandLie(String app)
     {
         try
         {
             //Start Emulator then
             //Android/Sdk/platform-tools adb install pathToApk
+            return "PASS : I install the " + app + " app";
         }
         catch(Exception ex)
-        {}
+        { return ex.toString();}
     }
 
-    public static void clickElement(String locator)
+    public static String tapButton(String locator, String element)
     {
         try
         {
@@ -105,42 +104,45 @@ public class AppHelp {
                 androidDriver.findElements(AppiumBy.className(locator)).get(1).click();
             */
             waitSec(500);
+            return "PASS : I tap the " + element + " button ";
         }
         catch(Exception ex)
-        {
-            failAppByEx(ex);}
+        { return ex.toString();}
     }
 
-    public static void typeElement(String locator,String text)
+    public static String typeElement(String locator,String element, String text)
     {
         try
         {
             androidDriver.findElement(AppiumBy.xpath(locator)).sendKeys(text);
             waitSec(1000);
+            return "PASS : I type " + text + " into the the " + element;
         }
         catch(Exception ex)
-        {failAppByEx(ex);}
+        { return ex.toString();}
     }
 
-    public static void longClickElementBy(String locator) {
+    public static String longClickElementBy(String locator) {
         try {
             WebElement element = androidDriver.findElement(AppiumBy.xpath(locator));
             ((JavascriptExecutor)androidDriver).executeScript("mobile: longClickGesture",
                     ImmutableMap.of("elementId",
                             ((RemoteWebElement)element).getId()),"duration",3000);
             waitSec(500);
-        } catch(Exception ex)
-        {failAppByEx(ex);}
+            return "PASS : I long tap the " + element + " button ";
+        }
+        catch(Exception ex)
+        { return ex.toString();}
     }
 
     public static String getTextOfElementBy(String by) {
         try {
             return androidDriver.findElement(AppiumBy.xpath("")).getText();
         } catch(Exception ex)
-        {failAppByEx(ex); return null;}
+        {return ex.toString();}
     }
 
-    public static void selectDropDown(String locator,String value) {
+    public static String selectDropDown(String locator,String element, String value) {
         try {
             androidDriver.findElement(AppiumBy.xpath(locator)).click();waitSec(1000);
             androidDriver.findElement(AppiumBy.androidUIAutomator(
@@ -148,28 +150,34 @@ public class AppHelp {
                     value = value.replace("text(\"","").replace("\")","");
             androidDriver.findElement(AppiumBy.xpath("//android.widget.TextView[@text = '"+value+"']")).click();
             waitSec(1000);
-        } catch(Exception ex)
-        {failAppByEx(ex);}
+            return "PASS : I select " + value + " from the " + element;
+        }
+        catch(Exception ex)
+        { return ex.toString();}
     }
 
-    public static void setRadio(String locator) {
+    public static String setRadio(String locator, String element) {
         try {
             androidDriver.findElement(AppiumBy.id(locator)).click();
             waitSec(500);
-        } catch(Exception ex)
-        {failAppByEx(ex);}
+            return "PASS  : I set the " + element + " radio";
+        }
+        catch(Exception ex)
+        { return ex.toString();}
     }
 
-    public static void scrollToElement(String locator) {
+    public static String scrollToElement(String locator, String element) {
         try {
             androidDriver.findElement(AppiumBy.androidUIAutomator(
                     "new UiScrollable(new UiSelector()).scrollIntoView("+locator+");"));
             waitSec(500);
-        } catch(Exception ex)
-        {failAppByEx(ex);}
+            return "PASS  : I scroll to the " + element + " radio";
+        }
+        catch(Exception ex)
+        { return ex.toString();}
     }
 
-    public static void swipeToElementBy(String by,String dir) {
+    public static String swipeToElementBy(String by,String dir) {
         try {
             WebElement element = androidDriver.findElement(AppiumBy.xpath(""));
             ((JavascriptExecutor)androidDriver).executeScript("mobile: swipeGesture",
@@ -177,12 +185,13 @@ public class AppHelp {
                             ((RemoteWebElement)element).getId(),
                     "direction",dir,"percent",0.75));
             waitSec(500);
+            return "PASS  : I swipe to the " + element + " element";
         }
         catch(Exception ex)
-        {failAppByEx(ex);}
+        { return ex.toString();}
     }
 
-    public static void scrollToEnd() {
+    public static String scrollToEnd() {
         try {
             boolean scrollMore;
             do{
@@ -194,24 +203,16 @@ public class AppHelp {
             }
             while (scrollMore);
             waitSec(500);
+            return "PASS  : I scroll to the end";
         }
         catch(Exception ex)
-        {failAppByEx(ex);}
+        { return ex.toString();}
     }
-
-
 
     public static void waitSec(int sleep) {
         try {
             Thread.sleep(sleep);
         } catch (Exception ex) {}
-    }
-
-    public static void failAppByEx(Exception ex){
-        stopAppDriver();
-        System.out.println(ex.toString());
-        test.fail(ex.toString());
-        Assert.assertTrue(false,ex.toString());
     }
 
 }

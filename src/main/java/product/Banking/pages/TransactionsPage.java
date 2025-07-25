@@ -2,7 +2,7 @@ package product.Banking.pages;
 
 import org.openqa.selenium.By;
 import static common.selenium.WebHelp.*;
-import static common.setup.Hooks.test;
+import static common.setup.Hooks.AssertStep;
 
 public class TransactionsPage {
     
@@ -19,17 +19,15 @@ public class TransactionsPage {
     private static final By logout_button = By.xpath("//button[text()='Logout']");
     
     public static void verifyTransaction(String amount) {
-        assertElementText(transaction1_amount,amount);
+        AssertStep(assertElementText(transaction1_amount,"transaction1_amount", amount));
         takeScreenShot();
-        test.pass("Transaction " + amount + " Confirmed");
     }
 
     public static void selectReset() {
-        clickElement(reset_button);
-        test.pass("Transactions Reset");
+        AssertStep(clickElement(reset_button,"reset_button"));
     }
 
     public static void goToBack() {
-        clickElement(back_button);
+        AssertStep(clickElement(back_button,"back_button"));
     }
 }

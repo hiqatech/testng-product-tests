@@ -2,10 +2,10 @@ package product.Banking.pages;
 
 import org.openqa.selenium.By;
 import static common.selenium.WebHelp.*;
-import static common.setup.Hooks.test;
+import static common.setup.Hooks.AssertStep;
 
 public class DepositPage {
-   
+
     private static final By amount_field = By.xpath("//input[@placeholder='amount']");
     private static final By deposit = By.xpath("//button[text()='Deposit']");
     private static final By deposit_successful = By.xpath("//*[text()='Deposit Successful']");
@@ -19,29 +19,39 @@ public class DepositPage {
     private static final By home_button = By.xpath("//button[text()='Home']");
     private static final By logout_button = By.xpath("//button[text()='Logout']");
 
+
     public static void makeDeposit(String amount){
-        typeElement(amount_field,amount);
-        clickElement(deposit);
+        typeAmount(amount);
+        clickDeposit();
         sleep(1000);
-        assertElementDisplayed(deposit_successful);
-        assertElementText(balance,"100");
+        verifySuccess();
+        verifyBalance(amount);
         takeScreenShot();
-        test.pass("Made " + amount + " Deposit");
+    }
+
+    public static void typeAmount(String amount){
+        AssertStep(typeElement(amount_field,"amount_field",amount));
+    }
+
+    public static void clickDeposit(){
+        AssertStep( clickElement(deposit,"deposit"));
+    }
+
+    public static void verifySuccess(){
+        AssertStep( assertElementDisplayed(deposit_successful, "deposit_successful"));
     }
 
     public static void verifyBalance(String amount){
-        assertElementText(balance,amount);
+        AssertStep(assertElementText(balance,"balance",  amount));
         takeScreenShot();
-        test.pass("Balance " + amount + " Confirmed");
     }
 
     public static void goToTransactions() {
-        clickElement(transactions_button);
+        AssertStep(clickElement(transactions_button,"transactions_button"));
     }
 
     public static void logout() {
-        clickElement(logout_button);
-        test.pass("Logged Out");
+        AssertStep(clickElement(logout_button, "logout_button"));
     }
 }
 

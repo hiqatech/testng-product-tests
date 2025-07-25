@@ -16,8 +16,6 @@ import org.testng.Assert;
 import java.io.File;
 import java.net.URL;
 import java.time.Duration;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 
 import static common.setup.Hooks.print;
@@ -29,7 +27,7 @@ public class WebHelp {
     public static int waitTimeMax= 5000;
     public static int waitTime = 200;
 
-    public static void startMyWebDriver() {
+    public static String startWebDriver() {
         try {
             DesiredCapabilities capabilities;
             if (System.getProperty("environment").contains("Chrome"))
@@ -105,25 +103,98 @@ public class WebHelp {
             webDriver.manage().timeouts().implicitlyWait(Duration.ofSeconds(7));
             webDriver.manage().window().maximize();
 
-
-        } catch (Exception ex) {
-            failWebByEx(ex);
+            return "PASS : I start the " + System.getProperty("driver") + " webDriver";
         }
+        catch(Exception ex)
+        { return ex.toString();}
     }
 
-    public static void stopMyWebDriver() {
+    public static String stopWebDriver() {
         try {
             webDriver.quit();
-        } catch (Exception ex) {}
+            return "PASS : I stop the " + System.getProperty("driver") + " webDriver";
+        }
+        catch(Exception ex)
+        { return ex.toString();}
     }
 
-    public static void navigateToUrl(String url){
+    public static String navigateToUrl(String url){
         try{
             webDriver.get(url); sleep(3000);
-        } catch (Exception ex) {
-            failWebByEx(ex);
+            return "PASS : I navigate to the " + url + " url";
         }
+        catch(Exception ex)
+        { return ex.toString();}
     }
+
+    public static String takeScreenShot(){
+        try{
+        sleep(1000);
+            TakesScreenshot scrShot =((TakesScreenshot)webDriver);
+            File SrcFile=scrShot.getScreenshotAs(OutputType.FILE);
+            test.pass("", MediaEntityBuilder.createScreenCaptureFromPath(SrcFile.getPath()).build());
+            return "PASS : I take screenshot";
+        }
+        catch(Exception ex)
+        { return ex.toString();}
+    }
+
+    public static String clickElement(By locator, String element){
+        try{
+            getWebElement(locator).click();
+            return "PASS : I click the " + element + " element";
+        }
+        catch(Exception ex)
+        { return ex.toString();}
+    }
+
+    public static String typeElement(By locator, String element, String text){
+        try{
+            getWebElement(locator).sendKeys(text);
+            return "PASS : I type " + text + " into the " + element;
+        }
+        catch(Exception ex)
+        { return ex.toString();}
+    }
+
+    public static String assertElementDisplayed(By locator, String element){
+        try{
+            Assert.assertTrue(waitToAppear(locator).isDisplayed());
+            return "PASS : I assert " + element + " displayed";
+        }
+        catch(Exception ex)
+        { return ex.toString();}
+    }
+
+    public static String assertElementNotDisplayed(By locator, String element){
+        try{
+            Assert.assertTrue(!waitToDisappear(locator).isDisplayed());
+            return "PASS : I assert " + element + " not displayed";
+        }
+        catch(Exception ex)
+        { return ex.toString();}
+    }
+
+    public static String assertElementText(By locator,String element, String text){
+        try {
+            Assert.assertEquals(getWebElement(locator).getText(),text);
+            return "PASS : I assert " + element + " has text " + text;
+        }
+        catch(Exception ex)
+        { return ex.toString();}
+    }
+
+    public static String selectElementByText(By locator, String element, String text){
+        try{
+            Select select = new Select(getWebElement(locator));
+            select.selectByVisibleText(text);WebHelp.sleep(200);
+            return "PASS : I select " + text + " from the " + element;
+        }
+        catch(Exception ex)
+        { return ex.toString();}
+    }
+
+    ///////////////////////////////////////////////////////////////////////////////////////////////
 
     public static void sleep(int sleep) {
         try {
@@ -131,132 +202,50 @@ public class WebHelp {
         } catch (Exception ex) {}
     }
 
-    public static void takeScreenShot(){
-        try{
-        sleep(1000);
-            TakesScreenshot scrShot =((TakesScreenshot)webDriver);
-            File SrcFile=scrShot.getScreenshotAs(OutputType.FILE);
-            test.pass("", MediaEntityBuilder.createScreenCaptureFromPath(SrcFile.getPath()).build());
-        } catch (Exception ex) {
-            failWebByEx(ex);
-        }
-    }
-
-    public static void clickElement(By elementBy){
-        try{
-            Assert.assertTrue(waitToAppear(elementBy));
-            webDriver.findElement(elementBy).click();
-        } catch (Exception ex) {
-            failWebByEx(ex);
-        }
-    }
-
-    public static void typeElement(By elementBy, String text){
-        try{
-            Assert.assertTrue(waitToAppear(elementBy));
-            getWebElement(elementBy).sendKeys(text);
-        sleep(500);
-        } catch (Exception ex) {
-            failWebByEx(ex);
-        }
-    }
-
-    public static void assertElementDisplayed(By elementBy){
-        try{
-            Assert.assertTrue(waitToAppear(elementBy));
-        } catch (Exception ex) {
-            failWebByEx(ex);
-        }
-    }
-
-    public static void assertElementNotDisplayed(By elementBy){
-        try{
-            Assert.assertTrue(waitToDisappear(elementBy));
-        } catch (Exception ex) {
-            failWebByEx(ex);
-        }
-    }
-
-    public static void assertElementText(By elementBy, String text){
-        try {
-            Assert.assertTrue(waitToAppear(elementBy));
-            Assert.assertEquals(getWebElement(elementBy).getText(),text);
-        } catch (Exception ex) {
-            failWebByEx(ex);
-        }
-    }
-
-    public static void selectElementByText(By elementBy, String text){
-        try{
-            Assert.assertTrue(waitToAppear(elementBy));
-            Select select = new Select(webDriver.findElement(elementBy));
-            select.selectByVisibleText(text);WebHelp.sleep(200);
-        } catch (Exception ex) {
-            failWebByEx(ex);
-        }
-    }
-
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-    public static void failWebByEx(Exception ex){
-        takeScreenShot();
-        stopMyWebDriver();
-        test.fail(ex.toString());
-        Assert.assertTrue(false,ex.toString());
-    }
-
-    public static String getTimeStamp(){
-        String nano = String.valueOf(LocalDateTime.now().getNano());
-        String date = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMddHHmmss"));
-        return  date + "-" + nano;
-    }
-
-    ///////////////////////////////////////////////////////////////////////////////////////////////
-
-    public static WebElement getWebElement(By elementBy)
+    public static WebElement getWebElement(By locator)
     {
-        return webDriver.findElement(elementBy);
+        return waitToAppear(locator);
     }
 
-    public static Boolean isDisplayed(By elementBy)
+    public static Boolean isDisplayed(By locator)
     {
-            WebElement webElement  = getWebElement(elementBy);
+            WebElement webElement  = webDriver.findElement(locator);
             if(webElement.isDisplayed() || webElement.isEnabled())
                 return true;
             else return false;
     }
 
-    public static boolean waitToAppear(By elementBy)
+    public static WebElement waitToAppear(By locator)
     {
         double startTime = 0;
         while (startTime < waitTimeMax)
         {
             sleep(waitTime);
-            if(isDisplayed(elementBy))
-                return true;
+            if(isDisplayed(locator))
+                return webDriver.findElement(locator);
             else
             {
                 sleep(waitTime);
                 startTime = startTime + waitTime;
             }
         }
-        return isDisplayed(elementBy);
+        return null;
     }
 
-    public static boolean waitToDisappear(By elementBy)
+    public static WebElement waitToDisappear(By locator)
     {
         double startTime = 0;
         while (startTime < waitTimeMax)
         {
-            if(!isDisplayed(elementBy))
-                return true;
+            if(!isDisplayed(locator))
+                return getWebElement(locator);
             else
             {
                 sleep(waitTime);
                 startTime = startTime + waitTime;
             }
         }
-        return false;
+        return null;
     }
 
 }

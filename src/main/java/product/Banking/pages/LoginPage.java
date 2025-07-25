@@ -3,6 +3,7 @@ package product.Banking.pages;
 import common.setup.Hooks;
 import org.openqa.selenium.By;
 import static common.selenium.WebHelp.*;
+import static common.setup.Hooks.AssertStep;
 import static common.setup.Hooks.test;
 
 public class LoginPage {
@@ -14,10 +15,28 @@ public class LoginPage {
     private static final By login_button = By.xpath("//button[text()='Login']");
 
     public static void loginWithUser(String userName) {
-        navigateToUrl(System.getProperty("baseURL"));
-        clickElement(customer_login);
-        selectElementByText(user_select, userName);
-        clickElement(login_button);
+        gotoHomePage();
+        customerLogin();
+        userSelect(userName);
+        clickLogin();
         test.pass("Logged in with "+ userName + " user");
     }
+
+    public static void gotoHomePage(){
+        AssertStep(navigateToUrl(System.getProperty("baseURL")));
+    }
+
+    public static void customerLogin(){
+        AssertStep(clickElement(customer_login, "customer_login"));
+    }
+
+    public static void userSelect(String name){
+        AssertStep(selectElementByText(user_select,"user_select", name));
+    }
+
+    public static void clickLogin(){
+        AssertStep(clickElement(login_button,"login_button"));
+    }
+
+
 }
