@@ -7,6 +7,7 @@ import io.appium.java_client.android.options.UiAutomator2Options;
 import io.appium.java_client.ios.IOSDriver;
 import io.appium.java_client.service.local.AppiumDriverLocalService;
 import io.appium.java_client.service.local.AppiumServiceBuilder;
+import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.remote.RemoteWebElement;
@@ -89,12 +90,12 @@ public class AppHelp {
         { return ex.toString();}
     }
 
-    public static String tapButton(String locator, String element)
+    public static String tapButton(By locator, String element)
     {
         try
         {
             //if(by.equals("XPath"))]]],
-            androidDriver.findElement(AppiumBy.xpath(locator)).click();waitSec(1000);
+            androidDriver.findElement(locator).click();waitSec(1000);
             /*
             if(by.equals("AcID"))
                 androidDriver.findElement(AppiumBy.accessibilityId(locator)).click();
@@ -110,11 +111,11 @@ public class AppHelp {
         { return ex.toString();}
     }
 
-    public static String typeElement(String locator,String element, String text)
+    public static String typeElement(By locator,String element, String text)
     {
         try
         {
-            androidDriver.findElement(AppiumBy.xpath(locator)).sendKeys(text);
+            androidDriver.findElement(locator).sendKeys(text);
             waitSec(1000);
             return "PASS : I type " + text + " into the the " + element;
         }
@@ -122,9 +123,9 @@ public class AppHelp {
         { return ex.toString();}
     }
 
-    public static String longClickElementBy(String locator) {
+    public static String longClickElementBy(By locator, String name) {
         try {
-            WebElement element = androidDriver.findElement(AppiumBy.xpath(locator));
+            WebElement element = androidDriver.findElement(locator);
             ((JavascriptExecutor)androidDriver).executeScript("mobile: longClickGesture",
                     ImmutableMap.of("elementId",
                             ((RemoteWebElement)element).getId()),"duration",3000);
@@ -135,16 +136,16 @@ public class AppHelp {
         { return ex.toString();}
     }
 
-    public static String getTextOfElementBy(String by) {
+    public static String getTextOfElementBy(By locator, String element) {
         try {
             return androidDriver.findElement(AppiumBy.xpath("")).getText();
         } catch(Exception ex)
         {return ex.toString();}
     }
 
-    public static String selectDropDown(String locator,String element, String value) {
+    public static String selectDropDown(By locator,String element, String value) {
         try {
-            androidDriver.findElement(AppiumBy.xpath(locator)).click();waitSec(1000);
+            androidDriver.findElement(locator).click();waitSec(1000);
             androidDriver.findElement(AppiumBy.androidUIAutomator(
                     "new UiScrollable(new UiSelector()).scrollIntoView(" + value + ");"));waitSec(1000);
                     value = value.replace("text(\"","").replace("\")","");
@@ -156,9 +157,9 @@ public class AppHelp {
         { return ex.toString();}
     }
 
-    public static String setRadio(String locator, String element) {
+    public static String setRadio(By locator, String element) {
         try {
-            androidDriver.findElement(AppiumBy.id(locator)).click();
+            androidDriver.findElement(locator).click();
             waitSec(500);
             return "PASS  : I set the " + element + " radio";
         }
@@ -166,7 +167,7 @@ public class AppHelp {
         { return ex.toString();}
     }
 
-    public static String scrollToElement(String locator, String element) {
+    public static String scrollToElement(AppiumBy locator, String element) {
         try {
             androidDriver.findElement(AppiumBy.androidUIAutomator(
                     "new UiScrollable(new UiSelector()).scrollIntoView("+locator+");"));
@@ -177,7 +178,7 @@ public class AppHelp {
         { return ex.toString();}
     }
 
-    public static String swipeToElementBy(String by,String dir) {
+    public static String swipeToElementBy(AppiumBy locator,String dir) {
         try {
             WebElement element = androidDriver.findElement(AppiumBy.xpath(""));
             ((JavascriptExecutor)androidDriver).executeScript("mobile: swipeGesture",

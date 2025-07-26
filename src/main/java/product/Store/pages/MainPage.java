@@ -1,6 +1,7 @@
 package product.Store.pages;
 
-import java.util.HashMap;
+import io.appium.java_client.AppiumBy;
+import org.openqa.selenium.By;
 
 import static common.appium.AppHelp.*;
 import static common.appium.AppHelp.tapButton;
@@ -8,23 +9,14 @@ import static common.appium.AppHelp.setRadio;
 import static common.setup.Hooks.AssertStep;
 
 public class MainPage {
-
-
-    public static HashMap<String, String> elementLocators = new HashMap<String, String>();
-    static {
-        elementLocators.put("countryDropDown", "//android.widget.TextView" +
+    
+    private static final By countryDropDown = AppiumBy.xpath("//android.widget.TextView" +
                 "[@resource-id=\"android:id/text1\"]");
-        elementLocators.put("nameField", "//android.widget.EditText" +
-                "[@resource-id=\"com.androidsample.generalstore:id/nameField\"]");
-        elementLocators.put("letsGoShop", "//android.widget.Button" +
-                "[@resource-id=\"com.androidsample.generalstore:id/btnLetsShop\"]");
-        elementLocators.put("radioMale", "com.androidsample.generalstore:id/radioMale");
-    }
-
-    public static String get(String element_name)
-    {
-        return elementLocators.get(element_name);
-    }
+    private static final By nameField = AppiumBy.xpath("//android.widget.EditText" +
+            "[@resource-id=\"com.androidsample.generalstore:id/nameField\"]");
+    private static final By letsGoShop = AppiumBy.xpath("//android.widget.Button" +
+            "[@resource-id=\"com.androidsample.generalstore:id/btnLetsShop\"]");
+    private static final By radioMale = (AppiumBy) AppiumBy.id("com.androidsample.generalstore:id/radioMale");
 
     public static void register(){
         waitSec(2000);
@@ -35,19 +27,19 @@ public class MainPage {
     }
 
     public static void selectCountry(String country){
-        AssertStep(selectDropDown(get("countryDropDown"),"countryDropDown",  "text(\"Switzerland\")"));
+        AssertStep(selectDropDown(countryDropDown,"countryDropDown",  "text(\"Switzerland\")"));
     }
 
     public static void typeName(String name){
-        AssertStep(typeElement(get("nameField"),"nameField", name));
+        AssertStep(typeElement(nameField,"nameField", name));
     }
 
     public static void setSex(String sex){
-        AssertStep(setRadio(get("radioMale"), "radioMale"));
+        AssertStep(setRadio(radioMale, "radioMale"));
     }
 
     public static void lestsGoShop(){
-        AssertStep(tapButton(get("letsGoShop"),"letsGoShop"));
+        AssertStep(tapButton(letsGoShop,"letsGoShop"));
     }
 
 
